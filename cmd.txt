@@ -1,0 +1,1 @@
+go build -o forum github.com/fberrez/forum/server && ./forum

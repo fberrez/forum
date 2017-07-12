@@ -1,0 +1,13 @@
+{
+	"Database": {
+		"Type": "MySQL",
+		"MySQL": {
+			"Username": "root",
+			"Password": "R00T/r00t",
+			"Name": "forum",
+			"Hostname": "localhost",
+			"Port": "3306",
+			"Parameter": "?parseTime=true"
+		}
+	}
+}
