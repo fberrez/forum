@@ -15,7 +15,8 @@ func getRouter() *gin.Engine {
 	userRouter := router.Group("/u")
 	{
 		userRouter.GET("/connect", controller.ConnectUser)
-		//userRouter.GET("/disconnect")
+		userRouter.POST("/create", controller.CreateUser)
+		userRouter.POST("/edit", controller.EditUser)
 	}
 
 	/*profileRouter := userRouter.Group("/profile")
