@@ -10,13 +10,7 @@ import (
 
 func ConnectUser(c *gin.Context) {
 	user, err := model.GetUserByPseudo("toast")
-	if err != nil {
-		log.Printf("db.Query error :\n\t-query: GetUserByPseudo\n\t-desc: %v\n\n", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "SQL Query Error"})
-	} else {
-		log.Println(user)
-		c.JSON(http.StatusOK, user)
-	}
+
 }
 
 func CreateUser(c *gin.Context) {

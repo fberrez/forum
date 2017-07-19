@@ -1,0 +1,14 @@
+// This is a template of your config file. Put your IDs, rename this file by "config.json" and remove this commentary line
+{
+	"Database": {
+		"Type": "MySQL",
+		"MySQL": {
+			"Username": "YOUR_USERNAME",
+			"Password": "YOUR_PASSWORD",
+			"Name": "YOUR_DB_NAME",
+			"Hostname": "YOUR_HOSTNAME",
+			"Port": "YOUR_PORT",
+			"Parameter": "YOUR_PARAMETER"
+		}
+	}
+}

@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/fberrez/forum/datastore"
-	"github.com/fberrez/forum/jsonconfig"
+	"github.com/fberrez/forum/shared/jsonconfig"
 	"log"
 	"os"
 	"os/signal"
