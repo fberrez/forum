@@ -7,13 +7,15 @@ import (
 )
 
 type User struct {
-	Id       int       `json:"id" db:"id"`
-	Pseudo   string    `json:"pseudo" db:"pseudo"`
-	Password string    `json:"password" db:"password"`
-	Email    string    `json:"email" db:"email"`
-	Date     time.Time `json:"date" db:"date"`
-	Karma    float64   `json:"karma" db:"karma"`
-	Ip       string    `json:"ip" db:"ip"`
+	Id              int       `json:"id" db:"user_id"`
+	Pseudo          string    `json:"pseudo" db:"user_pseudo"`
+	Password        string    `json:"password" db:"user_password"`
+	Email           string    `json:"email" db:"user_email"`
+	Date            time.Time `json:"date" db:"user_date"`
+	Date_lastConnec time.Time `json:"date_lastConnec" db:"user_date_lastConnection"`
+	Group           int       `json:"group" db:"user_groupId"`
+	Karma           float64   `json:"karma" db:"user_karma"`
+	Ip              string    `json:"ip" db:"user_ip"`
 }
 
 func GetUserByPseudo(pseudo string) (User, error) {
@@ -22,7 +24,7 @@ func GetUserByPseudo(pseudo string) (User, error) {
 
 	switch datastore.ReadConfig().Type {
 	case datastore.TypeMySQL:
-		err = datastore.SQL.Get(&result, "SELECT * FROM user WHERE pseudo = ?", pseudo)
+		err = datastore.SQL.Get(&result, "SELECT * FROM forum_user WHERE user_pseudo = ? LIMIT 1", pseudo)
 	}
 
 	return result, err
@@ -34,7 +36,7 @@ func GetUserByEmail(email string) (User, error) {
 
 	switch datastore.ReadConfig().Type {
 	case datastore.TypeMySQL:
-		err = datastore.SQL.Get(&result, "SELECT * FROM user WHERE email = ?", email)
+		err = datastore.SQL.Get(&result, "SELECT * FROM forum_user WHERE user_email = ? LIMIT 1", email)
 	}
 
 	return result, err
@@ -45,7 +47,7 @@ func CreateUser(newUser User) error {
 
 	switch datastore.ReadConfig().Type {
 	case datastore.TypeMySQL:
-		_, err = datastore.SQL.Exec("INSERT INTO user (pseudo, password, email, karma, ip) VALUES(?, ?, ?, 5, ?)", newUser.Pseudo, newUser.Password, newUser.Email, newUser.Ip)
+		_, err = datastore.SQL.Exec("INSERT INTO forum_user (user_pseudo, user_password, user_email, user_karma, user_ip) VALUES(?, ?, ?, 5, ?)", newUser.Pseudo, newUser.Password, newUser.Email, newUser.Ip)
 	}
 
 	return err
@@ -57,7 +59,7 @@ func EditUser(newUser User) (sql.Result, error) {
 
 	switch datastore.ReadConfig().Type {
 	case datastore.TypeMySQL:
-		result, err = datastore.SQL.NamedExec("UPDATE user SET pseudo=:pseudo, password=:password, email=:email, karma=:karma, ip=:ip WHERE id=:id", newUser)
+		result, err = datastore.SQL.NamedExec("UPDATE forum_user SET user_pseudo=:pseudo, user_password=:password, user_email=:email, user_karma=:karma, user_ip=:ip, user_groupId:=:group, user_date_lastConnection=:date_lastConnec WHERE id=:id", newUser)
 
 	}
 

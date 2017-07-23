@@ -1,31 +1,36 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/fberrez/forum/model"
+	"github.com/fberrez/forum/shared/passhash"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"strconv"
 )
 
-func ConnectUser(c *gin.Context) {
-	user, err := model.GetUserByPseudo("toast")
-
-}
-
 func CreateUser(c *gin.Context) {
 	var user model.User
 
-	if missingParam("name", c) || missingParam("password", c) || missingParam("email", c) {
+	if missingParam("pseudo", c) || missingParam("password", c) || missingParam("email", c) {
+		return
+	}
+
+	hashedPassword, err := passhash.HashString(c.PostForm("password"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"executed": false, "message": "Password cannot be hashed"})
 		return
 	}
 
 	user.Pseudo = c.PostForm("pseudo")
-	user.Password = c.PostForm("password")
+	user.Password = hashedPassword
 	user.Email = c.PostForm("email")
 	user.Ip = c.ClientIP()
 
-	err := model.CreateUser(user)
+	fmt.Println("Password : " + c.PostForm("password") + "\nHashed Password : " + user.Password + "\nValidity : " + strconv.FormatBool(passhash.MatchString(user.Password, c.PostForm("password"))))
+
+	err = model.CreateUser(user)
 	if err != nil {
 		log.Printf("db.Query error :\n\t-query: CreateUser\n\t-desc: %v\n\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"executed": false, "message": "Cannot add user into database"})
