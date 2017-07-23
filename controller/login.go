@@ -68,6 +68,7 @@ func LoginUser(c *gin.Context) {
 			session.Save()
 			return
 		} else {
+			session.Clear()
 			session.Set("id", user.Id)
 			session.Set("pseudo", user.Pseudo)
 			session.Set("email", user.Email)
@@ -85,4 +86,13 @@ func LoginUser(c *gin.Context) {
 		return
 	}
 
+}
+
+func LogoutUser(c *gin.Context) {
+	session := sessions.Default(c)
+
+	if session.Get("id") != nil {
+		session.Clear()
+		c.JSON(http.StatusOK, gin.H{"executed": true, "message": "Successful disconnection !"})
+	}
 }

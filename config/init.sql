@@ -11,7 +11,7 @@ CREATE TABLE forum_category (
 	category_id INT PRIMARY KEY AUTO_INCREMENT,
 	category_title VARCHAR(64) NOT NULL UNIQUE,
 	category_description TEXT,
-	date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	category_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE forum_subCategory (
@@ -43,7 +43,7 @@ CREATE TABLE forum_user (
 
 CREATE TABLE forum_post (
 	post_id INT PRIMARY KEY AUTO_INCREMENT,
-	post_idSubcategory INT NOT NULL,
+	post_idSubCategory INT NOT NULL,
 	post_idUser INT NOT NULL,
 	post_idParentPost INT NOT NULL DEFAULT 0,
 	post_title VARCHAR(90) NOT NULL UNIQUE,
@@ -69,3 +69,8 @@ CREATE TABLE forum_pollsOptions (
 );
 
 INSERT INTO forum_group (`group_name`) VALUES ('Utilisateur'), ('Modérateur'), ('Administrateur');
+
+INSERT INTO forum_category (`category_title`, `category_description`) VALUES ('Code', 'Catégorie où l\'on parle programmation'), ('Jeux', 'Viens jouer !'), ('Blabla', 'On parle de tout et de rien...');
+
+INSERT INTO forum_subCategory (`subCategory_idCategory`, `subCategory_title`, `subCategory_description`) VALUES 
+('1', 'Go', 'Pokemon Go'), ('1', 'C++', 'Programmation orientée objet !'), ('2', 'Mario', ''),('2', 'Minecraft', 'Cubes & Cubes'), ('2', 'Shootmanio', 'Pour les vrais hommes');

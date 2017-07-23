@@ -17,25 +17,26 @@ func getRouter() *gin.Engine {
 
 	userRouter := router.Group("/u")
 	{
-		userRouter.POST("/connect", controller.LoginUser)
+		userRouter.POST("/login", controller.LoginUser)
+		userRouter.GET("/logout", controller.LogoutUser)
 		userRouter.POST("/create", controller.CreateUser)
 		userRouter.POST("/edit", controller.EditUser)
 	}
-	/*
-		postRouter := router.Group("/p")
-		{
-			postRouter.POST("/create", controller.CreatePost)
-			postRouter.POST("/answer/:id", controller.CreateAnswer)
-		}
 
-		categoryRouter := router.Group("/c")
-		{
-			categoryRouter.GET("/list", controller.GetCategory)
-			categoryRouter.GET("/:id/list", controller.GetSubCategory)
-			categoryRouter.GET("/:idCat/:idSubCat/list", controller.GetPosts)
-			categoryRouter.GET("/:idCat/:idSubCat/:idPost/list", controller.GetPostMessages)
-		}
-	*/
+	// postRouter := router.Group("/p")
+	// {
+	// 	postRouter.POST("/create", controller.CreatePost)
+	// 	postRouter.POST("/answer/:id", controller.CreateAnswer)
+	// }
+
+	categoryRouter := router.Group("/c")
+	{
+		categoryRouter.GET("/list/", controller.GetCategory)
+		categoryRouter.GET("/list/:idCat/", controller.GetSubCategoryByIdCategory)
+		categoryRouter.GET("/list/:idCat/:idSubCat", controller.GetPostsByIdSubCategory)
+		// categoryRouter.GET("/:idCat/:idSubCat/:idPost/list", controller.GetPostMessages)
+	}
+
 	/*profileRouter := userRouter.Group("/profile")
 	{
 		userRouter.GET("/edit")
