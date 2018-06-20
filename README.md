@@ -1,3 +1,3 @@
 # Forum API in GO
 
-# This project is no more developed
+# This project is no longer developed
